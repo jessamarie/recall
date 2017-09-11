@@ -2,26 +2,39 @@ import React, { Component } from 'react'
 import TopicList from '../components/TopicList'
 
 import './TopicPickerContainer.css'
-import topicData from '../data/topic-data.json'
+import topicsData from '../data/topic-data.json'
 
 class TopicPickerContainer extends Component {
 
   constructor () {
     super()
     this.state = {
-      topicData: topicData,
+      topics: new Array(topicsData),
       matchingTopics: []
     }
+
+    this.getMatchingTopics = this.getMatchingTopics.bind(this)
   }
 
-  getMatchingTopics() {
-    
+  getMatchingTopics (e) {
+    var input = e.target.value
+    var topics = []
+
+    if (input !== '') {
+      topics = topicsData.filter((topic) => {
+        return topic.name.startsWith(e.target.value)
+      })
+    }
+
+    this.setState({
+      matchingTopics: topics
+    })
   }
 
   render () {
     return (
       <div className='TopicPickerContainer'>
-        <TopicList />
+        <TopicList topics={this.state.matchingTopics} onInputChange={this.getMatchingTopics} />
       </div>
     )
   }

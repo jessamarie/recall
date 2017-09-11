@@ -22,14 +22,14 @@ class TopicList extends Component {
   // The ul is useful because it can handle positioning its children.
   //  These children can be anything you want. Buttons, anchors, other form elements, whatever.
   render () {
-    var topicList = topics.map((topic, index) => {
+    var topicList = this.props.topics.map((topic) => {
       return (
-        <li key={index}>{topic}</li>
+        <li key={topic.id}>{topic.name}</li>
       )
     })
     return (
       <form className='TopicList'>
-        <input list='topics' onChange={this.getCorrespondingTopics} placeholder='Enter a topic (e.g Biology, Math, etc)' />
+        <input list='topics' onChange={this.props.onInputChange} placeholder='Enter a topic (e.g Biology, Math, etc)' />
         <ul>
           {topicList}
         </ul>
