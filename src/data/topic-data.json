@@ -1,0 +1,34 @@
+[
+  { "name": "Biology I",
+    "sentences": [
+      "The cell is the basic unit of life.",
+      "Photosynthesis is the conversion of light energy from the sun into chemical energy.",
+      "Vegans are Herbivores.",
+      "Humans are Omnivores."
+    ]
+  },
+  { "name": "Cognitive Psychology",
+    "sentences": [
+      "Long-term memory can hold large amounts of information for long periods of time.",
+      "Attention is cognitive resources, mental effort, or concentration devoted to a cognitive process.",
+      "Artificial intelligence is a branch of computer science concerned with creating computers that mimic human performance on cognitive tasks.",
+      "Short-term memory is thought to hold onto incoming information for up to 20-30 seconds."
+    ]
+  },
+  { "name": "History, U.S",
+    "sentences": [
+      "The thirteenth amendment forbade slavery and involuntary servitude.",
+      "The fourteenth amendment made all persons born or naturalized in the United States citizens of the country",
+      "The fifteenth amendment gave African American men the right to vote."
+    ]
+  },
+  {
+    "name": "Programming",
+    "sentences": [
+      "Encapsulation hides the internal state of an object",
+      "A stack is a data structure that works like a pile of plates",
+      "A queue is a data structure that works as a line of people",
+      "A pointer is a variable that refers to a value"
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+.TopicPickerContainer {
+  width: 90%;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Testing */
+/*.TopicPickerContainer {
+  border: 2px solid blue;
+}*/
