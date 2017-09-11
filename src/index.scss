@@ -1,35 +1,42 @@
 /* Site wide CSS rules */
-@import url("https://fonts.googleapis.com/css?family=Raleway");
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+
 html, header, footer, main, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img,
 ul, li, form, label, input, button {
   font-family: 'Raleway', sans-serif;
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
   outline: 0;
-  border: none; }
+  border: none;
+}
 
 body {
   background-color: #67AB9F;
-  line-height: 1.2; }
+  line-height: 1.2;
+}
 
-ul {
-  list-style: none; }
+ul { list-style: none; }
 
 input {
   display: block;
   min-height: 30px;
   height: 8vh;
   font-size: 6.5vmin;
-  text-indent: 1%; }
+  text-indent: 1%;
+}
 
 input::placeholder {
-  color: gray; }
+  color: gray;
+}
 
 button {
   background-color: white;
   border: 1px solid black;
   width: 12%;
-  font-size: 70%; }
+  font-size: 70%;
+}
 
 button:hover {
-  background-color: gray; }
+  background-color: gray;
+}

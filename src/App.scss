@@ -1,0 +1,81 @@
+$shadow: rgba(0,0,0,0.1);
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App {
+  height: 100vh;
+  width: 100vw;
+  @include flex-center;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 5vh;
+  width: 99%;
+}
+
+header h1 { margin-right: auto }
+
+button.instructions {
+  height: 50%;
+}
+
+main {
+  flex: 1;
+  min-width: 99%;
+  // border: 1px solid blue;
+  @include flex-center;
+}
+
+.container {
+  position: relative;
+  width: 75%;
+  padding-top: (3 / 5) * 75%;
+}
+
+.flashcard {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.flashcard {
+  background-color: #FFF;
+  // height: 100%;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  border: 1px solid $shadow;
+box-shadow:  -1px 1px $shadow,
+ -1px 1px $shadow,
+ -2px 2px $shadow,
+ -2px 2px $shadow,
+ -2px 2px $shadow;
+}
+
+/* Testing */
+/*.container {
+  border: 1px solid red;
+}*/
+
+footer {
+  padding: 1%;
+  font-size: 2.5vh;
+}
+
+@media screen {
+  .App {
+    position:relative;
+    // overflow-x:hidden;
+    overflow: hidden;
+  }
+}

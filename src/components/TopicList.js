@@ -29,7 +29,7 @@ class TopicList extends Component {
     })
     return (
       <form className='TopicList'>
-        <input list='topics' onChange={this.props.onInputChange} placeholder='Enter a topic (e.g Biology, Math, etc)' />
+        <input list='topics' onChange={this.props.onInputChange} placeholder='Enter a topic (e.g. Math)' />
         <ul>
           {topicList}
         </ul>

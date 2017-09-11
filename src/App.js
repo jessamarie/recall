@@ -9,10 +9,14 @@ class App extends Component {
       <div className='App'>
         <header>
           <h1>Recall</h1>
-          <button>Instructions</button>
+          <button className='instructions'>Instructions</button>
         </header>
-        <main className='container'>
-          <TopicPickerContainer />
+        <main>
+          <div className='container'>
+            <div className='flashcard'>
+              <TopicPickerContainer />
+            </div>
+          </div>
         </main>
         <footer>Made with &hearts; by Jessa</footer>
       </div>
