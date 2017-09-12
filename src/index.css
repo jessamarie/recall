@@ -15,13 +15,6 @@ body {
 ul {
   list-style: none; }
 
-input {
-  display: block;
-  min-height: 30px;
-  height: 8vh;
-  font-size: 6.5vmin;
-  text-indent: 1%; }
-
 input::placeholder {
   color: gray; }
 

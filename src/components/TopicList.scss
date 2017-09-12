@@ -10,7 +10,27 @@
 .TopicList input {
   border-bottom: 1px solid gray;
   width: 99%;
+  min-height: 30px;
+  height: 8vh;
+  font-size: 6.5vmin;
+  text-indent: 1%;
 }
+
+//save for later
+// input, .autocomplete {
+//   // display: inline-block;
+//   // width: auto;
+//
+// }
+//
+// .autocomplete {
+//   display: inline-block;
+// }
+//
+// .input-wrapper {
+//   border-bottom: 1px solid gray;
+//   width: 99%;
+// }
 
 input::placeholder {
   font-style: italic;
@@ -26,6 +46,14 @@ input::placeholder {
   border-top: none;
   overflow: hidden;
   overflow-y: scroll;
+}
+
+.TopicList li:hover {
+  background-color: lightgray;
+}
+
+.TopicList ul .selected {
+  background-color: gray;
 }
 
 /* Testing */
