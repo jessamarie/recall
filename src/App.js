@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 
 import TopicPickerContainer from './containers/TopicPickerContainer'
+import SentencesContainer from './containers/SentencesContainer'
 
 /**
  * App is the component that holds the entire application
@@ -14,6 +15,7 @@ class App extends Component {
     }
 
     this.setTopic = this.setTopic.bind(this)
+    this.resetTopic = this.resetTopic.bind(this)
   }
 
   /*
@@ -24,6 +26,16 @@ class App extends Component {
     console.log('setting topic to', topic)
     this.setState({
       selectedTopic: topic
+    })
+  }
+
+  /*
+    resetTopic is called by SentencesContainer to reset a topic
+   */
+  resetTopic (e) {
+    console.log('reseting topic...')
+    this.setState({
+      selectedTopic: {}
     })
   }
 
@@ -38,7 +50,9 @@ class App extends Component {
   */
   Container () {
     if (!this.isEmpty(this.state.selectedTopic)) {
-      console.log('empty')
+      return (<SentencesContainer
+        resetTopic={this.state.resetTopic}
+        topic={this.state.selectedTopic} />)
     } else {
       return (
         <TopicPickerContainer setTopic={this.setTopic} />
