@@ -51,7 +51,7 @@ class App extends Component {
   Container () {
     if (!this.isEmpty(this.state.selectedTopic)) {
       return (<SentencesContainer
-        resetTopic={this.state.resetTopic}
+        resetTopic={this.resetTopic}
         topic={this.state.selectedTopic} />)
     } else {
       return (
