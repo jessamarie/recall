@@ -8,8 +8,16 @@ class TopicList extends Component {
   /* getCorrespondingTopics fills the autocomplete dropdown
     with topics that match the input data
    */
-  getCorrespondingTopics (e) {
+  ListItems () {
+    if (this.props.topics && this.props.topics.length > 0) {
+      return this.props.topics.map((topic) => {
+        return (
+          <li key={topic.id}>{topic.name}</li>
+        )
+      })
+    }
 
+    return null
   }
 
   // use JS to listen for the input change event
@@ -22,17 +30,14 @@ class TopicList extends Component {
   // The ul is useful because it can handle positioning its children.
   //  These children can be anything you want. Buttons, anchors, other form elements, whatever.
   render () {
-    var topicList = this.props.topics.map((topic) => {
-      return (
-        <li key={topic.id}>{topic.name}</li>
-      )
-    })
+    var listItems = this.ListItems()
+
+    var list = listItems ? (<ul> {listItems} </ul>) : null
+
     return (
       <form className='TopicList'>
         <input list='topics' onChange={this.props.onInputChange} placeholder='Enter a topic (e.g. Math)' />
-        <ul>
-          {topicList}
-        </ul>
+        {list}
       </form>
     )
   }
