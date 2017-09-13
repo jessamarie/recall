@@ -36,7 +36,7 @@ class TopicList extends Component {
             placeholder='Enter a topic (e.g. Math)' />
           {/* <span className="autocomplete"></span> */}
         </div>
-        {list}
+        <div className='list-wrapper'>{list}</div>
       </form>
     )
   }
