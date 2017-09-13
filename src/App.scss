@@ -15,29 +15,32 @@ $shadow: rgba(0,0,0,0.1);
 
 header {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  height: 5vh;
   width: 99%;
+  margin: .5vh 0 0 0;
 }
 
-header h1 { margin-right: auto }
+header h1 {
+  font-size: 5vmax;
+}
 
-button.instructions {
+.instructions {
+  align-self: flex-end;
   height: 50%;
 }
 
 main {
   flex: 1;
   min-width: 99%;
-  // border: 1px solid blue;
   @include flex-center;
 }
 
 .container {
   position: relative;
-  width: 75%;
-  padding-top: (3 / 5) * 75%;
+  width: 65%;
+  padding-top: (3 / 5) * 65%;
 }
 
 .flashcard {
@@ -46,14 +49,8 @@ main {
   right: 0;
   bottom: 0;
   left: 0;
-}
 
-.flashcard {
   background-color: #FFF;
-  // height: 100%;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
   border: 1px solid $shadow;
 box-shadow:  -1px 1px $shadow,
  -1px 1px $shadow,
@@ -61,11 +58,6 @@ box-shadow:  -1px 1px $shadow,
  -2px 2px $shadow,
  -2px 2px $shadow;
 }
-
-/* Testing */
-/*.container {
-  border: 1px solid red;
-}*/
 
 footer {
   padding: 1%;
@@ -75,7 +67,21 @@ footer {
 @media screen {
   .App {
     position:relative;
-    // overflow-x:hidden;
     overflow: hidden;
   }
+}
+
+@media (max-width: 800px) {
+  header {
+    height: 25vh;
+  }
+  header h1 {
+    font-size: 8vmax;
+  }
+
+  .container {
+    width: 80%;
+    padding-top: (3 / 5) * 80%;
+  }
+
 }

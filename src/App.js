@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
+import 'font-awesome/css/font-awesome.css'
+
 import './App.css'
+
+import FontAwesome from 'react-fontawesome'
 
 import TopicPickerContainer from './containers/TopicPickerContainer'
 import SentencesContainer from './containers/SentencesContainer'
@@ -66,8 +70,8 @@ class App extends Component {
     return (
       <div className='App'>
         <header>
+          <div className='instructions'><FontAwesome name='question-circle' /></div>
           <h1>Recall</h1>
-          <button className='instructions'>Instructions</button>
         </header>
         <main>
           <div className='container'>

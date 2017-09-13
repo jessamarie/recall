@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 
 import './SentencesContainer.css'
-import 'font-awesome/css/font-awesome.css'
 import Sentence from '../components/Sentence'
 
 /* exclusions is a list of words that will not be extracted

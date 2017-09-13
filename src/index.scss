@@ -1,5 +1,6 @@
 /* Site wide CSS rules */
 @import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Crafty+Girls');
 
 
 html, header, footer, main, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img,
@@ -11,7 +12,7 @@ ul, li, form, label, input, button {
 }
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Crafty Girls', sans-serif;
   background-color: #67AB9F;
   line-height: 1.2;
 }
@@ -19,7 +20,7 @@ body {
 ul { list-style: none; }
 
 input {
-  font-family: 'Raleway', sans-serif;
+	font-family: 'Crafty Girls', sans-serif;
   display: inline-block;
   border-bottom: 1px solid gray;
   min-height: 30px;
@@ -32,10 +33,9 @@ input::placeholder {
 }
 
 button {
-  font-family: 'Raleway', sans-serif;
-  background-color: white;
+  background-color: #FFF;
   border: 1px solid black;
-  width: 12%;
+	width: 3vmax;
   font-size: 70%;
 }
 
