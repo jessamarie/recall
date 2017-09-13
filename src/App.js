@@ -1,18 +1,86 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
+import 'font-awesome/css/font-awesome.css'
+
 import './App.css'
 
+import FontAwesome from 'react-fontawesome'
+
+import TopicPickerContainer from './containers/TopicPickerContainer'
+import SentencesContainer from './containers/SentencesContainer'
+
+/**
+ * App is the component that holds the entire application
+ */
 class App extends Component {
+  constructor () {
+    super()
+    this.state = {
+      selectedTopic: {}
+    }
+
+    this.setTopic = this.setTopic.bind(this)
+    this.resetTopic = this.resetTopic.bind(this)
+  }
+
+  /*
+    setTopic is called by TopicPickerContainer when a user
+    has submitted a topic
+   */
+  setTopic (topic) {
+    console.log('setting topic to', topic)
+    this.setState({
+      selectedTopic: topic
+    })
+  }
+
+  /*
+    resetTopic is called by SentencesContainer to reset a topic
+   */
+  resetTopic (e) {
+    console.log('reseting topic...')
+    this.setState({
+      selectedTopic: {}
+    })
+  }
+
+  /* isEmpty checks if an object is empty */
+  isEmpty (obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object
+  }
+
+  /*
+    Container returns the proper container based on the
+    value of selectedTopic
+  */
+  Container () {
+    if (!this.isEmpty(this.state.selectedTopic)) {
+      return (<SentencesContainer
+        resetTopic={this.resetTopic}
+        topic={this.state.selectedTopic} />)
+    } else {
+      return (
+        <TopicPickerContainer setTopic={this.setTopic} />
+      )
+    }
+  }
+
   render () {
+    var container = this.Container()
+
     return (
       <div className='App'>
-        <div className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className='App-intro'>
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <header>
+          <div className='instructions'><FontAwesome name='question-circle' /></div>
+          <h1>Recall</h1>
+        </header>
+        <main>
+          <div className='container'>
+            <div className='flashcard'>
+              {container}
+            </div>
+          </div>
+        </main>
+        <footer>Made with &hearts; by Jessa</footer>
       </div>
     )
   }

@@ -1,0 +1,40 @@
+.Sentence {
+  width: 95%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Sentence p:first-child::first-letter{
+  text-transform: capitalize;
+}
+
+.Sentence p {
+  max-width: 100%;
+}
+
+.Sentence p, .Sentence input {
+  font-size: 4.5vmin;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.Sentence span, .Sentence input {
+  margin: .2vh .5vw;
+}
+
+.Sentence input {
+  border-bottom: 1px solid black;
+  height: 4vmax;
+  font-weight: bold;
+  font-style: italic;
+  text-indent: none;
+}
+
+.correct {
+  color: green;
+}

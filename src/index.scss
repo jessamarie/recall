@@ -1,37 +1,44 @@
 /* Site wide CSS rules */
-@import url("https://fonts.googleapis.com/css?family=Raleway");
-@import url("https://fonts.googleapis.com/css?family=Crafty+Girls");
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Crafty+Girls');
+
+
 html, header, footer, main, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img,
 ul, li, form, label, input, button {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
   outline: 0;
-  border: none; }
+  border: none;
+}
 
 body {
   font-family: 'Crafty Girls', sans-serif;
   background-color: #67AB9F;
-  line-height: 1.2; }
+  line-height: 1.2;
+}
 
-ul {
-  list-style: none; }
+ul { list-style: none; }
 
 input {
-  font-family: 'Crafty Girls', sans-serif;
+	font-family: 'Crafty Girls', sans-serif;
   display: inline-block;
   border-bottom: 1px solid gray;
   min-height: 30px;
   height: 8vh;
-  font-size: 6.5vmin; }
+  font-size: 6.5vmin;
+}
 
 input::placeholder {
-  color: gray; }
+  color: gray;
+}
 
 button {
   background-color: #FFF;
   border: 1px solid black;
-  width: 3vmax;
-  font-size: 70%; }
+	width: 3vmax;
+  font-size: 70%;
+}
 
 button:hover {
-  background-color: gray; }
+  background-color: gray;
+}
