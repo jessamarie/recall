@@ -227,7 +227,9 @@ class SentencesContainer extends Component {
     return (
       <div className='SentencesContainer'>
         <div className='options top'>
-          <button onClick={this.props.resetTopic}><FontAwesome name='chevron-left' /></button>
+          <button className='back' onClick={this.props.resetTopic}><FontAwesome name='chevron-left' /></button>
+          <h2 className='topic'>{this.props.topic.name}</h2>
+          <button className='empty' >.</button>
         </div>
         <Sentence
           onAnswerChange={this.handleAnswerChange}

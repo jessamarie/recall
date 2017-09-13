@@ -14,14 +14,32 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  align-items: center;
 }
 
 .options button {
-  width: 4%;
-  font-size: 1em;
+  width: auto;
+  padding: .2vh .3vw;
+  font-size: 1.5vmax;
+}
+
+.top {
+  justify-content: center;
 }
 
 .top button {
-  margin-right: auto;
   border: none;
+}
+
+.topic {
+  font-size: 4vmin;
+}
+
+.back {
+  margin-right: auto;
+}
+
+.empty {
+  color: #FFF;
+  margin-left: auto;
 }
