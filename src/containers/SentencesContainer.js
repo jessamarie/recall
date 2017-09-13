@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import './SentencesContainer.css'
+import FontAwesome from 'react-fontawesome'
 
+import './SentencesContainer.css'
+import 'font-awesome/css/font-awesome.css'
 import Sentence from '../components/Sentence'
 
 /* exclusions is a list of words that will not be extracted
@@ -224,18 +226,20 @@ class SentencesContainer extends Component {
   render () {
     return (
       <div className='SentencesContainer'>
+        <div className='options top'>
+          <button onClick={this.props.resetTopic}><FontAwesome name='chevron-left' /></button>
+        </div>
         <Sentence
           onAnswerChange={this.handleAnswerChange}
           sentence={this.state.currentSentence}
           currentIndex={this.state.currentIndex}
         />
 
-        <div className='options'>
-          <button onClick={this.props.resetTopic}>New Topic</button>
-          <button onClick={this.restart}>Restart</button>
-          <button onClick={this.previous}>Previous</button>
-          <button onClick={this.next}>Next</button>
-          <button onClick={this.reveal}>Answer</button>
+        <div className='options bottom'>
+          <button onClick={this.previous}><FontAwesome name='arrow-left' /></button>
+          <button onClick={this.restart}><FontAwesome name='repeat' /></button>
+          <button onClick={this.reveal}><FontAwesome name='envelope-open' /></button>
+          <button onClick={this.next}><FontAwesome name='arrow-right' /></button>
         </div>
       </div>
     )
