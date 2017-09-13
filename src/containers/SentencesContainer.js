@@ -3,7 +3,7 @@ import './SentencesContainer.css'
 
 import Sentence from '../components/Sentence'
 
-/* exclusions is a list of words that will not be stripped
+/* exclusions is a list of words that will not be extracted
   from a sentence. */
 var exclusions = [
   'a', 'the', 'an', 'to', 'is', 'are', 'that', 'of', 'like', 'as',
@@ -19,78 +19,176 @@ class SentencesContainer extends Component {
   /* constructor */
   constructor (props) {
     super(props)
+
+    var extractedSentences = this.prepSentences()
+
     this.state = {
-      strippedSentences: this.prepareSentences(),
-      currentSentence: 0
+      extractedSentences: extractedSentences,
+      currentSentence: extractedSentences[0],
+      currentIndex: 0
     }
+
+    this.handleAnswerChange = this.handleAnswerChange.bind(this)
+    this.next = this.next.bind(this)
+    this.previous = this.previous.bind(this)
   }
 
-  /* prepareSentences strips each sentence of 1-2 words
+  /* prepSentences extracts each sentence of 1-2 words
      and returns an array of objects like so:
      obj = {
       sentence: 'original sentence'
-      strippedWords: ['word1', 'word2']
+      extractedWords: ['word1', 'word2']
     }
   */
-  prepareSentences () {
+  prepSentences () {
     return this.props.topic.sentences.map((sentence) => {
       var words = sentence.toLowerCase().trim().split(' ')
 
-      words = this.removeWords(words, exclusions)
-      words = this.stripWords(words)
+      var wordsToExtract = this.getWordsToExtract(words, words.length)
 
-      return {
-        sentence: sentence,
-        strippedWords: words
-      }
+      var extractedSentence = this.extractWordsFromSentences(words, wordsToExtract)
+      // console.log(extractedSentence)
+
+      return extractedSentence
     })
   }
 
-  /* stripSentence returns an array of one or two random
-  elements from the words array passed in
+  /*
+    extractWordsFromSentences marks a word as extracted if it
+    is in the wordsToExtract array.
+
+    @returns an array of objects that represent the full sentence,
+    one word at a time
   */
-  stripWords (words) {
-    var len = words.length
-    var strippedWords = []
+  extractWordsFromSentences (sentenceWords, wordsToExtract) {
+    var extractedSentence = sentenceWords.map((word) => {
+      if (wordsToExtract.includes(word)) {
+        return {
+          word: word,
+          attempt: '',
+          extracted: true,
+          completed: false
+        }
+      } else {
+        return {
+          word: word,
+          attempt: word,
+          extracted: false
+        }
+      }
+    })
 
-    strippedWords.push(this.stripWord(words, len))
-    words = this.removeWords(words, strippedWords)
+    return extractedSentence
+  }
 
-    if (len > 5) {
-      len = words.length
-      strippedWords.push(this.stripWord(words, len))
+  /*
+    getWordsToExtract handles the process of finding 1-2
+    words to remove from an array
+  */
+  getWordsToExtract (words, length) {
+    var wordsToExtract = []
+
+    var wordToExtract = this.getWordToExtract(words, wordsToExtract)
+    wordsToExtract.push(wordToExtract)
+
+    // repeat if length is long enough
+    if (length > 5) {
+      wordToExtract = this.getWordToExtract(words, wordsToExtract)
+      wordsToExtract.push(wordToExtract)
     }
 
-    return strippedWords
+    return wordsToExtract
   }
 
-  /* strip word finds one random word in an array
-    to strip
+  /*
+    getWordToExtract handles the process of finding one
+    word to remove from a given array of words
   */
-  stripWord (words, len) {
-    var randomIndex = Math.floor(Math.random() * len)
-    return words[randomIndex]
+  getWordToExtract (words, currentWordsToExtract) {
+    var wordToExtract
+    var excludedWords = []
+
+    excludedWords.push(...exclusions)
+    excludedWords.push(...currentWordsToExtract)
+
+    words = this.getExtractableWords(words, excludedWords)
+    wordToExtract = this.getRandomWordByIndex(words, words.length)
+
+    return wordToExtract
   }
 
-  /* removeWords returns the set difference of
+  /* getExtractableWords returns the set difference of
   two arrays of words
   */
-  removeWords (words, exclusionWords) {
+  getExtractableWords (words, exclusionWords) {
     let wordsSet = new Set(words)
     let exclusionsSet = new Set(exclusionWords)
     let difference = new Set([...wordsSet].filter(x => !exclusionsSet.has(x)))
     return Array.from(difference)
   }
 
+  /* getRandomWordByIndex finds one random word in an array
+    to extract
+  */
+  getRandomWordByIndex (words, len) {
+    var randomIndex = Math.floor(Math.random() * len)
+    return words[randomIndex]
+  }
+
+  /* getRandomWordByIndex finds one random word in an array
+    to extract
+  */
+  handleAnswerChange (e, index) {
+    var input = e.target.value
+    this.state.currentSentence[index].attempt = input
+
+    if (input === this.state.currentSentence[index].word) {
+      this.state.currentSentence[index].completed = true
+    }
+
+    this.state.extractedSentences[this.state.currentIndex] = this.state.currentSentence
+    console.log('new sentence', this.state.extractedSentences[this.state.currentIndex])
+
+    this.setState({
+      currentSentence: this.state.currentSentence,
+      extractedSentences: this.state.extractedSentences
+    })
+  }
+
+  /* next moves to the next sentence */
+  next () {
+    if (this.state.currentIndex < this.state.extractedSentences.length - 1) {
+      var newCurrentIndex = this.state.currentIndex + 1
+      this.setState({
+        currentIndex: newCurrentIndex,
+        currentSentence: this.state.extractedSentences[newCurrentIndex]
+      })
+    }
+  }
+
+  /* next moves to the previous sentence */
+  previous () {
+    if (this.state.currentIndex > 0) {
+      var newCurrentIndex = this.state.currentIndex - 1
+      this.setState({
+        currentIndex: newCurrentIndex,
+        currentSentence: this.state.extractedSentences[newCurrentIndex]
+      })
+    }
+  }
+
   render () {
     return (
       <div>
-        <Sentence sentence={this.state.strippedSentences[0].sentence}
-          words={this.state.strippedSentences[0].strippedWords}
+        <Sentence
+          onAnswerChange={this.handleAnswerChange}
+          sentence={this.state.currentSentence}
         />
-        <button onClick={this.props.resetTopic}>Reset</button>
+        <button onClick={this.props.resetTopic}>New Topic</button>
         <button onClick={this.props.resetTopic}>Resart</button>
-        <button onClick={this.props.resetTopic}>Skip</button>
+        <button onClick={this.previous}>Previous</button>
+        <button onClick={this.next}>Next</button>
+
       </div>
     )
   }

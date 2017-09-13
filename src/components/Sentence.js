@@ -5,16 +5,18 @@ import './Sentence.css'
  * Sentence is the component that displays a sentences
  */
 class Sentence extends Component {
-
   Sentence () {
-    return this.props.sentence.split(' ').map((word, index) => {
-      if (this.props.words.includes(word)) {
+    return this.props.sentence.map((word, index) => {
+      if (word.extracted) {
         return (
-          <input className='word' key={index} />
+          <input
+            className='word'
+            onChange={(e) => this.props.onAnswerChange(e, index)}
+            key={index} />
         )
       }
       return (
-        <span key={index}>{word} </span>
+        <span key={index}>{word.word} </span>
       )
     })
   }
@@ -24,7 +26,6 @@ class Sentence extends Component {
     return (
       <div>
         <p>{sentence}</p>
-        <p>{this.props.words[0]}</p>
       </div>
     )
   }
