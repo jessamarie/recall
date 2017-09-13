@@ -14,19 +14,20 @@ class Sentence extends Component {
           width: `${word.word.length * 2.3}vmax`
         }
 
-        var key = index * this.props.currentIndex
-
+        console.log(word.key)
         return (
           <input
             className={word.completed ? 'correct' : ''}
             style={style}
             onChange={(e) => this.props.onAnswerChange(e, index)}
-            key={key} />
+            value={word.attempt}
+            key={word.key}
+            disabled={word.completed} />
         )
       }
 
       return (
-        <span key={index}>{word.word}</span>
+        <span key={word.key}>{word.word}</span>
       )
     })
   }

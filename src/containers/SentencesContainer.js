@@ -11,6 +11,8 @@ var exclusions = [
   'with', 'onto'
 ]
 
+var keyCounter = 0
+
 /**
  * SentenceContainer is the component that holds all
  * of the logic related to breaking down sentences
@@ -30,15 +32,26 @@ class SentencesContainer extends Component {
 
     this.handleAnswerChange = this.handleAnswerChange.bind(this)
     this.next = this.next.bind(this)
+    this.reveal = this.reveal.bind(this)
     this.previous = this.previous.bind(this)
     this.restart = this.restart.bind(this)
   }
 
   /* prepSentences extracts each sentence of 1-2 words
-     and returns an array of objects like so:
+     and returns the sentence back as an array of objects.
+
+     If the word is not extracted then:
      obj = {
-      sentence: 'original sentence'
-      extractedWords: ['word1', 'word2']
+      word: The orginal word
+      key: A Unique identifier,
+      extracted: false
+     }
+     obj = {
+      word: The orginal word
+      attempt: '' // the user's input
+      key: A Unique identifier,
+      completed: false // word !== attempt,
+      extracted: true
     }
   */
   prepSentences () {
@@ -48,7 +61,6 @@ class SentencesContainer extends Component {
       var wordsToExtract = this.getWordsToExtract(words, words.length)
 
       var extractedSentence = this.extractWordsFromSentences(words, wordsToExtract)
-      // console.log(extractedSentence)
 
       return extractedSentence
     })
@@ -63,8 +75,11 @@ class SentencesContainer extends Component {
   */
   extractWordsFromSentences (sentenceWords, wordsToExtract) {
     var extractedSentence = sentenceWords.map((word) => {
+      keyCounter = keyCounter + 1
+
       if (wordsToExtract.includes(word)) {
         return {
+          key: keyCounter,
           word: word,
           attempt: '',
           extracted: true,
@@ -72,8 +87,8 @@ class SentencesContainer extends Component {
         }
       } else {
         return {
+          key: keyCounter,
           word: word,
-          attempt: word,
           extracted: false
         }
       }
@@ -192,6 +207,19 @@ class SentencesContainer extends Component {
     })
   }
 
+  /* reveal completes the sentence */
+  reveal () {
+    var newSentence = this.state.currentSentence.map((word) => {
+      word.completed = true
+      word.attempt = word.word
+      return word
+    })
+
+    this.setState({
+      currentSentence: newSentence
+    })
+  }
+
   render () {
     return (
       <div className='SentencesContainer'>
@@ -206,6 +234,7 @@ class SentencesContainer extends Component {
           <button onClick={this.restart}>Restart</button>
           <button onClick={this.previous}>Previous</button>
           <button onClick={this.next}>Next</button>
+          <button onClick={this.reveal}>Answer</button>
         </div>
       </div>
     )
