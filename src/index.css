@@ -15,6 +15,19 @@ body {
 ul {
   list-style: none; }
 
+input {
+  display: inline-block;
+  border-bottom: 1px solid gray;
+  min-height: 30px;
+  height: 8vh;
+  font-size: 6.5vmin;
+  text-indent: 1%; }
+
+p {
+  min-height: 30px;
+  height: 8vh;
+  font-size: 6.5vmin; }
+
 input::placeholder {
   color: gray; }
 

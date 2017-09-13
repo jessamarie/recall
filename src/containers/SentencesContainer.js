@@ -31,6 +31,7 @@ class SentencesContainer extends Component {
     this.handleAnswerChange = this.handleAnswerChange.bind(this)
     this.next = this.next.bind(this)
     this.previous = this.previous.bind(this)
+    this.restart = this.restart.bind(this)
   }
 
   /* prepSentences extracts each sentence of 1-2 words
@@ -140,18 +141,21 @@ class SentencesContainer extends Component {
   */
   handleAnswerChange (e, index) {
     var input = e.target.value
-    this.state.currentSentence[index].attempt = input
 
-    if (input === this.state.currentSentence[index].word) {
-      this.state.currentSentence[index].completed = true
+    var newSentence = this.state.currentSentence.slice()
+    var newExtractedSentences = this.state.extractedSentences.slice()
+
+    newSentence[index].attempt = input
+
+    if (input === newSentence[index].word) {
+      newSentence[index].completed = true
     }
 
-    this.state.extractedSentences[this.state.currentIndex] = this.state.currentSentence
-    console.log('new sentence', this.state.extractedSentences[this.state.currentIndex])
+    newExtractedSentences[this.state.currentIndex] = newSentence
 
     this.setState({
-      currentSentence: this.state.currentSentence,
-      extractedSentences: this.state.extractedSentences
+      currentSentence: newSentence,
+      extractedSentences: newExtractedSentences
     })
   }
 
@@ -177,18 +181,32 @@ class SentencesContainer extends Component {
     }
   }
 
+  /* restart reprepares the sentences and starts them at the beginning */
+  restart () {
+    var extractedSentences = this.prepSentences()
+
+    this.setState({
+      extractedSentences: extractedSentences,
+      currentIndex: 0,
+      currentSentence: extractedSentences[0]
+    })
+  }
+
   render () {
     return (
-      <div>
+      <div className='SentencesContainer'>
         <Sentence
           onAnswerChange={this.handleAnswerChange}
           sentence={this.state.currentSentence}
+          currentIndex={this.state.currentIndex}
         />
-        <button onClick={this.props.resetTopic}>New Topic</button>
-        <button onClick={this.props.resetTopic}>Resart</button>
-        <button onClick={this.previous}>Previous</button>
-        <button onClick={this.next}>Next</button>
 
+        <div className='options'>
+          <button onClick={this.props.resetTopic}>New Topic</button>
+          <button onClick={this.restart}>Restart</button>
+          <button onClick={this.previous}>Previous</button>
+          <button onClick={this.next}>Next</button>
+        </div>
       </div>
     )
   }

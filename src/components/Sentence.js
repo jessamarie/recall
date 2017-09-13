@@ -6,17 +6,27 @@ import './Sentence.css'
  */
 class Sentence extends Component {
   Sentence () {
-    return this.props.sentence.map((word, index) => {
+    var sentence = this.props.sentence
+
+    return sentence.map((word, index) => {
       if (word.extracted) {
+        var style = {
+          width: `${word.word.length * 2.3}vmax`
+        }
+
+        var key = index * this.props.currentIndex
+
         return (
           <input
-            className='word'
+            className={word.completed ? 'correct' : ''}
+            style={style}
             onChange={(e) => this.props.onAnswerChange(e, index)}
-            key={index} />
+            key={key} />
         )
       }
+
       return (
-        <span key={index}>{word.word} </span>
+        <span key={index}>{word.word}</span>
       )
     })
   }
@@ -24,8 +34,8 @@ class Sentence extends Component {
   render () {
     var sentence = this.Sentence()
     return (
-      <div>
-        <p>{sentence}</p>
+      <div className='Sentence'>
+        <p>{sentence}.</p>
       </div>
     )
   }

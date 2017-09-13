@@ -1,3 +1,33 @@
 .Sentence {
-  background: blue;
+  width: 95%;
+  flex: 1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Sentence p:first-child::first-letter{
+  text-transform: capitalize;
+}
+
+.Sentence p, .Sentence input {
+  font-size: 4vmax;
+  text-align: center;
+}
+
+.Sentence span, .Sentence input {
+  margin: 1%;
+}
+
+.Sentence input {
+  border-bottom: 1px solid black;
+  height: 4.2vmax;
+  font-weight: bold;
+  font-style: italic;
+  text-indent: none;
+}
+
+.correct {
+  color: green;
+  pointer-events: none;
 }

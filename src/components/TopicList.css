@@ -3,12 +3,7 @@
   width: 100%; }
 
 .TopicList input {
-  border-bottom: 1px solid gray;
-  width: 99%;
-  min-height: 30px;
-  height: 8vh;
-  font-size: 6.5vmin;
-  text-indent: 1%; }
+  width: 99%; }
 
 input::placeholder {
   font-style: italic; }
