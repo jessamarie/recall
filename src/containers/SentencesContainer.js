@@ -56,7 +56,8 @@ class SentencesContainer extends Component {
   */
   prepSentences () {
     return this.props.topic.sentences.map((sentence) => {
-      var words = sentence.toLowerCase().trim().split(' ')
+      // trim whitespace and remove all punctuation
+      var words = sentence.toLowerCase().trim().match(/[^_\W]+/g).join(' ').split(' ')
 
       var wordsToExtract = this.getWordsToExtract(words, words.length)
 

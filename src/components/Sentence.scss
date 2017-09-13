@@ -1,7 +1,7 @@
 .Sentence {
   width: 95%;
   flex: 1;
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -10,9 +10,17 @@
   text-transform: capitalize;
 }
 
+.Sentence p {
+  max-width: 100%;
+}
+
 .Sentence p, .Sentence input {
-  font-size: 4vmax;
+  font-size: 4.5vmin;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .Sentence span, .Sentence input {

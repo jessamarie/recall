@@ -14,7 +14,6 @@ class Sentence extends Component {
           width: `${word.word.length * 2.3}vmax`
         }
 
-        console.log(word.key)
         return (
           <input
             className={word.completed ? 'correct' : ''}
