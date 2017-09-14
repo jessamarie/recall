@@ -2,14 +2,18 @@
   "name": "recall",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jessamarie.github.io/recall/",
   "dependencies": {
     "font-awesome": "^4.7.0",
+    "gh-pages": "^1.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-fontawesome": "^1.6.1",
     "react-scripts": "1.0.13"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start": "react-scripts start",
