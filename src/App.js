@@ -70,7 +70,7 @@ class App extends Component {
     return (
       <div className='App'>
         <header>
-          <div className='instructions'><FontAwesome name='question-circle' /></div>
+          {/* <div className='instructions'><FontAwesome name='question-circle' /></div> */}
           <h1>Recall</h1>
         </header>
         <main>
