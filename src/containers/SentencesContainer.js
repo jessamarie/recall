@@ -40,6 +40,7 @@ class SentencesContainer extends Component {
     this.reveal = this.reveal.bind(this)
     this.previous = this.previous.bind(this)
     this.restart = this.restart.bind(this)
+    this.checkAnswer = this.checkAnswer.bind(this)
   }
 
   /* prepSentences extracts each sentence of 1-2 words
@@ -55,7 +56,7 @@ class SentencesContainer extends Component {
       word: The orginal word
       attempt: '' // the user's input
       key: A Unique identifier,
-      completed: false // word !== attempt,
+      correct: false // word !== attempt,
       extracted: true
     }
   */
@@ -89,7 +90,7 @@ class SentencesContainer extends Component {
           word: word,
           attempt: '',
           extracted: true,
-          completed: false
+          correct: null
         }
       } else {
         return {
@@ -169,7 +170,7 @@ class SentencesContainer extends Component {
     newSentence[index].attempt = input
 
     if (input === newSentence[index].word) {
-      newSentence[index].completed = true
+      newSentence[index].correct = true
     }
 
     newExtractedSentences[this.state.currentIndex] = newSentence
@@ -216,8 +217,22 @@ class SentencesContainer extends Component {
   /* reveal completes the sentence */
   reveal () {
     var newSentence = this.state.currentSentence.map((word) => {
-      word.completed = true
+      word.correct = true
       word.attempt = word.word
+      return word
+    })
+
+    this.setState({
+      currentSentence: newSentence
+    })
+  }
+
+  /* checkAnswer checks if the sentence is correct */
+  checkAnswer (e) {
+    var newSentence = this.state.currentSentence.map((word) => {
+      if (word.attempt !== word.word) {
+        word.correct = false
+      }
       return word
     })
 
@@ -230,7 +245,7 @@ class SentencesContainer extends Component {
     return (
       <div className='SentencesContainer'>
         <div className='options top'>
-          <button className='back' onClick={this.props.resetTopic}><FontAwesome name='chevron-left' /></button>
+          <button title='pick new topic' className='back' onClick={this.props.resetTopic}><FontAwesome name='chevron-left' /></button>
           <h2 className='topic'>{this.props.topic.name}</h2>
           <button className='empty' >.</button>
         </div>
@@ -241,10 +256,11 @@ class SentencesContainer extends Component {
         />
 
         <div className='options bottom'>
-          <button onClick={this.previous}><FontAwesome name='arrow-left' /></button>
-          <button onClick={this.restart}><FontAwesome name='repeat' /></button>
-          <button onClick={this.reveal}><FontAwesome name='envelope-open' /></button>
-          <button onClick={this.next}><FontAwesome name='arrow-right' /></button>
+          <button className='left' title='previous sentence' onClick={this.previous}><FontAwesome name='arrow-left' /></button>
+          <button className='restart' title='restart sentence set' onClick={this.restart}><FontAwesome name='repeat' /></button>
+          <button className='check' title='check answer' onClick={this.checkAnswer}><FontAwesome name='check-square' /></button>
+          <button className='help' title='reveal answer' onClick={this.reveal}><FontAwesome name='question-circle' /></button>
+          <button className='right' title='next sentence' onClick={this.next}><FontAwesome name='arrow-right' /></button>
         </div>
       </div>
     )

@@ -14,14 +14,22 @@ class Sentence extends Component {
           width: `${word.word.length * 2.3}vmax`
         }
 
+        var className = ''
+
+        if (word.correct === true) {
+          className = 'correct'
+        } else if (word.correct === false) {
+          className = 'incorrect'
+        }
+
         return (
           <input
-            className={word.completed ? 'correct' : ''}
+            className={className}
             style={style}
             onChange={(e) => this.props.onAnswerChange(e, index)}
             value={word.attempt}
             key={word.key}
-            disabled={word.completed} />
+            disabled={word.correct} />
         )
       }
 
