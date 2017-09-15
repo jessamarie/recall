@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://jessamarie.github.io/recall/",
   "dependencies": {
+    "axios": "^0.16.2",
     "font-awesome": "^4.7.0",
     "gh-pages": "^1.0.0",
     "react": "^15.6.1",
