@@ -28,8 +28,7 @@ class TopicPickerContainer extends Component {
 
   /* This will call the api to get all the topic data */
   componentDidMount () {
-    axios.get('http://localhost:4000/api/topics').then((response) => {
-      console.log(response.data)
+    axios.get('https://recall-app-api.herokuapp.com/api/topics').then((response) => {
       this.setState({
         topics: response.data
       })
@@ -47,7 +46,6 @@ class TopicPickerContainer extends Component {
 
     if (input !== '') {
       topics = this.state.topics.filter((topic) => {
-        console.log(input, topic.name)
         return topic.name.toLowerCase().startsWith(input.toLowerCase())
       })
     }
