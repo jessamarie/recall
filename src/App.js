@@ -27,7 +27,6 @@ class App extends Component {
     has submitted a topic
    */
   setTopic (topic) {
-    console.log('setting topic to', topic)
     this.setState({
       selectedTopic: topic
     })
@@ -37,7 +36,6 @@ class App extends Component {
     resetTopic is called by SentencesContainer to reset a topic
    */
   resetTopic (e) {
-    console.log('reseting topic...')
     this.setState({
       selectedTopic: {}
     })

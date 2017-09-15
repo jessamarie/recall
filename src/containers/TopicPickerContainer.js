@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TopicList from '../components/TopicList'
 
 import './TopicPickerContainer.css'
-import topicsData from '../data/topic-data.json'
+import axios from 'axios'
 
 /**
  * TopicList is the component that handles events related
@@ -12,7 +12,7 @@ class TopicPickerContainer extends Component {
   constructor () {
     super()
     this.state = {
-      topics: new Array(topicsData),
+      topics: [],
       matchingTopics: [],
       /* stores the id of the currently selected topic in the dropdown */
       selectedID: 0, // no id can be 0
@@ -26,6 +26,18 @@ class TopicPickerContainer extends Component {
     this.handleListTraversal = this.handleListTraversal.bind(this)
   }
 
+  /* This will call the api to get all the topic data */
+  componentDidMount () {
+    axios.get('https://recall-app-api.herokuapp.com/api/topics').then((response) => {
+      this.setState({
+        topics: response.data
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   /* findMatchingTopics returns a list of topic names that
      the user input startsWith
   */
@@ -33,7 +45,7 @@ class TopicPickerContainer extends Component {
     var topics = []
 
     if (input !== '') {
-      topics = topicsData.filter((topic) => {
+      topics = this.state.topics.filter((topic) => {
         return topic.name.toLowerCase().startsWith(input.toLowerCase())
       })
     }
