@@ -9,7 +9,11 @@ import Sentence from '../components/Sentence'
 var exclusions = [
   'a', 'the', 'an', 'to', 'is', 'are', 'that', 'of', 'like', 'as',
   'this', 'also', 'from', 'into', 'can', 'for', 'or', 'and', 'on',
-  'with', 'onto'
+  'with', 'onto', 'over', 'our', 'my', 'your', 'way', 'how', 'what',
+  'when', 'where', 'why', 'who', 'type', 'kind', 'just', 'was', 'be',
+  'get', 'getting', 'in', 'gives', 'protects', 'against', 'no', 'called',
+  'number', 'again', 'by', 'has', 'if', 'made', 'make', 'occur', 'at',
+  'not', 'using', 'use', 'work', 'works', 'allows', 'us', 'written'
 ]
 
 var keyCounter = 0
