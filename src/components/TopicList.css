@@ -4,22 +4,27 @@
   align-items: center;
   justify-content: flex-end;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+}
 
 .list-wrapper {
   width: 95%;
   min-height: 45%;
-  max-height: 45%; }
+  max-height: 45%;
+}
 
 .input-wrapper {
-  width: 95%; }
+  width: 95%;
+}
 
 .TopicList input {
   width: 100%;
-  height: auto; }
+  height: auto;
+}
 
 input::placeholder {
-  font-style: italic; }
+  font-style: italic;
+}
 
 .TopicList ul {
   background-color: #FFF;
@@ -31,13 +36,16 @@ input::placeholder {
   border: 1px solid black;
   border-top: none;
   overflow: hidden;
-  overflow-y: scroll; }
+  overflow-y: scroll;
+}
 
 .TopicList li:hover {
-  background-color: lightgray; }
+  background-color: lightgray;
+}
 
 .TopicList ul .selected {
-  background-color: lightgray; }
+  background-color: lightgray;
+}
 
 /* Testing */
 /*.TopicList { border: 1px solid black; }*/
