@@ -4,27 +4,27 @@
   "private": true,
   "homepage": "https://jessamarie.github.io/recall/",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "font-awesome": "^4.7.0",
-    "gh-pages": "^3.1.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "gh-pages": "^3.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-fontawesome": "^1.7.1",
-    "react-scripts": "^3.4.3"
+    "react-scripts": "^4.0.3"
   },
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "build-css": "sass src/:src/ --no-source-map",
+    "watch-css": "npm run build-css && sass src/:src/ --watch --no-source-map",
     "start": "react-scripts start",
-    "start-all": "npm-run-all -p watch-css start",
+    "start-all": "concurrently \"npm:watch-css\" \"npm:start\"",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom"
   },
   "devDependencies": {
-    "node-sass-chokidar": "^1.5.0",
-    "npm-run-all": "^4.1.5"
+    "concurrently": "^6.2.0",
+    "sass": "^1.34.1"
   },
   "browserslist": {
     "production": [
