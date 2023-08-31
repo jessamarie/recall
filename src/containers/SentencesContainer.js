@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './SentencesContainer.css';
+import './SentencesContainer.scss';
 import Sentence from '../components/Sentence';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

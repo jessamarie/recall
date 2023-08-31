@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './App.css';
+import './App.scss';
 
 import TopicPickerContainer from './containers/TopicPickerContainer';
 import SentencesContainer from './containers/SentencesContainer';
