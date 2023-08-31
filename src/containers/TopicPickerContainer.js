@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TopicList from '../components/TopicList';
 
-import './TopicPickerContainer.css';
+import './TopicPickerContainer.scss';
 import axios from 'axios';
 
 /**

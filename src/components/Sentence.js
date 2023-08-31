@@ -1,25 +1,25 @@
-import React, { Component } from 'react'
-import './Sentence.css'
+import React, { Component } from 'react';
+import './Sentence.scss';
 
 /**
  * Sentence is the component that displays a sentences
  */
 class Sentence extends Component {
-  Sentence () {
-    var sentence = this.props.sentence
+  Sentence() {
+    var sentence = this.props.sentence;
 
     return sentence.map((word, index) => {
       if (word.extracted) {
         var style = {
           width: `${word.word.length * 2.3}vmax`
-        }
+        };
 
-        var className = ''
+        var className = '';
 
         if (word.correct === true) {
-          className = 'correct'
+          className = 'correct';
         } else if (word.correct === false) {
-          className = 'incorrect'
+          className = 'incorrect';
         }
 
         return (
@@ -29,24 +29,23 @@ class Sentence extends Component {
             onChange={(e) => this.props.onAnswerChange(e, index)}
             value={word.attempt}
             key={word.key}
-            disabled={word.correct} />
-        )
+            disabled={word.correct}
+          />
+        );
       }
 
-      return (
-        <span key={word.key}>{word.word}</span>
-      )
-    })
+      return <span key={word.key}>{word.word}</span>;
+    });
   }
 
-  render () {
-    var sentence = this.Sentence()
+  render() {
+    var sentence = this.Sentence();
     return (
       <div className='Sentence'>
         <p>{sentence}.</p>
       </div>
-    )
+    );
   }
 }
 
-export default Sentence
+export default Sentence;
