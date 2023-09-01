@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import './App.scss';
 
@@ -8,38 +9,30 @@ import SentencesContainer from './containers/SentencesContainer';
 /**
  * App is the component that holds the entire application
  */
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      selectedTopic: {}
-    };
+export default function App() {
+  const [selectedTopic, setTopic] = useState({});
+  const [topics, setTopics] = useState([]);
 
-    this.setTopic = this.setTopic.bind(this);
-    this.resetTopic = this.resetTopic.bind(this);
-  }
-
-  /*
-    setTopic is called by TopicPickerContainer when a user
-    has submitted a topic
-   */
-  setTopic(topic) {
-    this.setState({
-      selectedTopic: topic
-    });
-  }
+  useEffect(() => {
+    axios
+      .get('https://recall-api.onrender.com/api/topics')
+      .then((response) => {
+        setTopics(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   /*
     resetTopic is called by SentencesContainer to reset a topic
    */
-  resetTopic(e) {
-    this.setState({
-      selectedTopic: {}
-    });
+  function resetTopic() {
+    setTopic({});
   }
 
   /* isEmpty checks if an object is empty */
-  isEmpty(obj) {
+  function isEmpty(obj) {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
   }
 
@@ -47,37 +40,28 @@ class App extends Component {
     Container returns the proper container based on the
     value of selectedTopic
   */
-  Container() {
-    if (!this.isEmpty(this.state.selectedTopic)) {
+  function getContainer() {
+    if (!isEmpty(selectedTopic)) {
       return (
-        <SentencesContainer
-          resetTopic={this.resetTopic}
-          topic={this.state.selectedTopic}
-        />
+        <SentencesContainer resetTopic={resetTopic} topic={selectedTopic} />
       );
     } else {
-      return <TopicPickerContainer setTopic={this.setTopic} />;
+      return <TopicPickerContainer setTopic={setTopic} topics={topics} />;
     }
   }
 
-  render() {
-    var container = this.Container();
-
-    return (
-      <div className='App'>
-        <header>
-          {/* <div className='instructions'><FontAwesome name='question-circle' /></div> */}
-          <h1>Recall</h1>
-        </header>
-        <main>
-          <div className='container'>
-            <div className='flashcard'>{container}</div>
-          </div>
-        </main>
-        <footer>Made with &hearts; by Jessa</footer>
-      </div>
-    );
-  }
+  return (
+    <div className='App'>
+      <header>
+        {/* <div className='instructions'><FontAwesome name='question-circle' /></div> */}
+        <h1>Recall</h1>
+      </header>
+      <main>
+        <div className='container'>
+          <div className='flashcard'>{getContainer()}</div>
+        </div>
+      </main>
+      <footer>Made with &hearts; by Jessa</footer>
+    </div>
+  );
 }
-
-export default App;

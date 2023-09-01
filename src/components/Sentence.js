@@ -1,20 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Sentence.scss';
 
 /**
  * Sentence is the component that displays a sentences
  */
-class Sentence extends Component {
-  Sentence() {
-    var sentence = this.props.sentence;
-
+export default function Sentence({ sentence, onAnswerChange }) {
+  function getSentence() {
     return sentence.map((word, index) => {
       if (word.extracted) {
-        var style = {
+        const style = {
           width: `${word.word.length * 2.3}vmax`
         };
 
-        var className = '';
+        let className = '';
 
         if (word.correct === true) {
           className = 'correct';
@@ -26,7 +24,7 @@ class Sentence extends Component {
           <input
             className={className}
             style={style}
-            onChange={(e) => this.props.onAnswerChange(e, index)}
+            onChange={(e) => onAnswerChange(e, index)}
             value={word.attempt}
             key={word.key}
             disabled={word.correct}
@@ -38,14 +36,9 @@ class Sentence extends Component {
     });
   }
 
-  render() {
-    var sentence = this.Sentence();
-    return (
-      <div className='Sentence'>
-        <p>{sentence}.</p>
-      </div>
-    );
-  }
+  return (
+    <div className='Sentence'>
+      <p>{getSentence()}.</p>
+    </div>
+  );
 }
-
-export default Sentence;
