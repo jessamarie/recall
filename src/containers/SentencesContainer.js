@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import './SentencesContainer.scss';
 import Sentence from '../components/Sentence';
@@ -11,100 +11,18 @@ import {
   faQuestionCircle,
   faSquareCheck
 } from '@fortawesome/free-solid-svg-icons';
+import { exclusions } from './exclusions';
 
-/* exclusions is a list of words that will not be extracted
-  from a sentence. */
-var exclusions = [
-  'a',
-  'the',
-  'an',
-  'to',
-  'is',
-  'are',
-  'that',
-  'of',
-  'like',
-  'as',
-  'this',
-  'also',
-  'from',
-  'into',
-  'can',
-  'for',
-  'or',
-  'and',
-  'on',
-  'with',
-  'onto',
-  'over',
-  'our',
-  'my',
-  'your',
-  'way',
-  'how',
-  'what',
-  'when',
-  'where',
-  'why',
-  'who',
-  'type',
-  'kind',
-  'just',
-  'was',
-  'be',
-  'get',
-  'getting',
-  'in',
-  'gives',
-  'protects',
-  'against',
-  'no',
-  'called',
-  'number',
-  'again',
-  'by',
-  'has',
-  'if',
-  'made',
-  'make',
-  'occur',
-  'at',
-  'not',
-  'using',
-  'use',
-  'work',
-  'works',
-  'allows',
-  'us',
-  'written'
-];
-
-var keyCounter = 0;
+let keyCounter = 0;
 
 /**
  * SentenceContainer is the component that holds all
  * of the logic related to breaking down sentences
  */
-class SentencesContainer extends Component {
-  /* constructor */
-  constructor(props) {
-    super(props);
-
-    var extractedSentences = this.prepSentences();
-
-    this.state = {
-      extractedSentences: extractedSentences,
-      currentSentence: extractedSentences[0],
-      currentIndex: 0
-    };
-
-    this.handleAnswerChange = this.handleAnswerChange.bind(this);
-    this.next = this.next.bind(this);
-    this.reveal = this.reveal.bind(this);
-    this.previous = this.previous.bind(this);
-    this.restart = this.restart.bind(this);
-    this.checkAnswer = this.checkAnswer.bind(this);
-  }
+export default function SentencesContainer({ topic, resetTopic }) {
+  const [extractedSentences, setExtractedSentences] = useState(prepSentences());
+  const [currentSentence, setCurrentSentence] = useState(extractedSentences[0]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   /* prepSentences extracts each sentence of 1-2 words
      and returns the sentence back as an array of objects.
@@ -123,19 +41,19 @@ class SentencesContainer extends Component {
       extracted: true
     }
   */
-  prepSentences() {
-    return this.props.topic.sentences.map((sentence) => {
+  function prepSentences() {
+    return topic.sentences.map((sentence) => {
       // trim whitespace and remove all punctuation
-      var words = sentence
+      const words = sentence
         .toLowerCase()
         .trim()
         .match(/[^_\W]+/g)
         .join(' ')
         .split(' ');
 
-      var wordsToExtract = this.getWordsToExtract(words, words.length);
+      let wordsToExtract = getWordsToExtract(words, words.length);
 
-      var extractedSentence = this.extractWordsFromSentences(
+      const extractedSentence = extractWordsFromSentences(
         words,
         wordsToExtract
       );
@@ -151,8 +69,8 @@ class SentencesContainer extends Component {
     @returns an array of objects that represent the full sentence,
     one word at a time
   */
-  extractWordsFromSentences(sentenceWords, wordsToExtract) {
-    var extractedSentence = sentenceWords.map((word) => {
+  function extractWordsFromSentences(sentenceWords, wordsToExtract) {
+    const extractedSentence = sentenceWords.map((word) => {
       keyCounter = keyCounter + 1;
 
       if (wordsToExtract.includes(word)) {
@@ -179,15 +97,15 @@ class SentencesContainer extends Component {
     getWordsToExtract handles the process of finding 1-2
     words to remove from an array
   */
-  getWordsToExtract(words, length) {
-    var wordsToExtract = [];
+  function getWordsToExtract(words, length) {
+    let wordsToExtract = [];
 
-    var wordToExtract = this.getWordToExtract(words, wordsToExtract);
+    let wordToExtract = getWordToExtract(words, wordsToExtract);
     wordsToExtract.push(wordToExtract);
 
     // repeat if length is long enough
     if (length > 5) {
-      wordToExtract = this.getWordToExtract(words, wordsToExtract);
+      wordToExtract = getWordToExtract(words, wordsToExtract);
       wordsToExtract.push(wordToExtract);
     }
 
@@ -198,15 +116,18 @@ class SentencesContainer extends Component {
     getWordToExtract handles the process of finding one
     word to remove from a given array of words
   */
-  getWordToExtract(words, currentWordsToExtract) {
-    var wordToExtract;
-    var excludedWords = [];
+  function getWordToExtract(words, currentWordsToExtract) {
+    let wordToExtract;
+    let excludedWords = [];
 
     excludedWords.push(...exclusions);
     excludedWords.push(...currentWordsToExtract);
 
-    words = this.getExtractableWords(words, excludedWords);
-    wordToExtract = this.getRandomWordByIndex(words, words.length);
+    const extractableWords = getExtractableWords(words, excludedWords);
+    wordToExtract = getRandomWordByIndex(
+      extractableWords,
+      extractableWords.length
+    );
 
     return wordToExtract;
   }
@@ -214,7 +135,7 @@ class SentencesContainer extends Component {
   /* getExtractableWords returns the set difference of
   two arrays of words
   */
-  getExtractableWords(words, exclusionWords) {
+  function getExtractableWords(words, exclusionWords) {
     let wordsSet = new Set(words);
     let exclusionsSet = new Set(exclusionWords);
     let difference = new Set(
@@ -226,19 +147,19 @@ class SentencesContainer extends Component {
   /* getRandomWordByIndex finds one random word in an array
     to extract
   */
-  getRandomWordByIndex(words, len) {
-    var randomIndex = Math.floor(Math.random() * len);
+  function getRandomWordByIndex(words, len) {
+    const randomIndex = Math.floor(Math.random() * len);
     return words[randomIndex];
   }
 
   /* getRandomWordByIndex finds one random word in an array
     to extract
   */
-  handleAnswerChange(e, index) {
-    var input = e.target.value;
+  function handleAnswerChange(e, index) {
+    const input = e.target.value;
 
-    var newSentence = this.state.currentSentence.slice();
-    var newExtractedSentences = this.state.extractedSentences.slice();
+    const newSentence = currentSentence.slice();
+    let newExtractedSentences = extractedSentences.slice();
 
     newSentence[index].attempt = input;
 
@@ -246,126 +167,100 @@ class SentencesContainer extends Component {
       newSentence[index].correct = true;
     }
 
-    newExtractedSentences[this.state.currentIndex] = newSentence;
+    newExtractedSentences[currentIndex] = newSentence;
 
-    this.setState({
-      currentSentence: newSentence,
-      extractedSentences: newExtractedSentences
-    });
+    setCurrentSentence(newSentence);
+    setExtractedSentences(newExtractedSentences);
   }
 
   /* next moves to the next sentence */
-  next() {
-    if (this.state.currentIndex < this.state.extractedSentences.length - 1) {
-      var newCurrentIndex = this.state.currentIndex + 1;
-      this.setState({
-        currentIndex: newCurrentIndex,
-        currentSentence: this.state.extractedSentences[newCurrentIndex]
-      });
+  function next() {
+    if (currentIndex < extractedSentences.length - 1) {
+      const newCurrentIndex = currentIndex + 1;
+
+      setCurrentIndex(newCurrentIndex);
+      setCurrentSentence(extractedSentences[newCurrentIndex]);
     }
   }
 
   /* next moves to the previous sentence */
-  previous() {
-    if (this.state.currentIndex > 0) {
-      var newCurrentIndex = this.state.currentIndex - 1;
-      this.setState({
-        currentIndex: newCurrentIndex,
-        currentSentence: this.state.extractedSentences[newCurrentIndex]
-      });
+  function previous() {
+    if (currentIndex > 0) {
+      const newCurrentIndex = currentIndex - 1;
+
+      setCurrentIndex(newCurrentIndex);
+      setCurrentSentence(extractedSentences[newCurrentIndex]);
     }
   }
 
   /* restart reprepares the sentences and starts them at the beginning */
-  restart() {
-    var extractedSentences = this.prepSentences();
+  function restart() {
+    const extracted = prepSentences();
 
-    this.setState({
-      extractedSentences: extractedSentences,
-      currentIndex: 0,
-      currentSentence: extractedSentences[0]
-    });
+    setExtractedSentences(extracted);
+    setCurrentIndex(0);
+    setCurrentSentence(extractedSentences[0]);
   }
 
   /* reveal completes the sentence */
-  reveal() {
-    var newSentence = this.state.currentSentence.map((word) => {
+  function reveal() {
+    const newSentence = currentSentence.map((word) => {
       word.correct = true;
       word.attempt = word.word;
       return word;
     });
 
-    this.setState({
-      currentSentence: newSentence
-    });
+    setCurrentSentence(newSentence);
   }
 
   /* checkAnswer checks if the sentence is correct */
-  checkAnswer(e) {
-    var newSentence = this.state.currentSentence.map((word) => {
+  function checkAnswer(e) {
+    let newSentence = currentSentence.map((word) => {
       if (word.attempt !== word.word) {
         word.correct = false;
       }
       return word;
     });
 
-    this.setState({
-      currentSentence: newSentence
-    });
+    setCurrentSentence(newSentence);
   }
 
-  render() {
-    return (
-      <div className='SentencesContainer'>
-        <div className='options top'>
-          <button
-            title='pick new topic'
-            className='back'
-            onClick={this.props.resetTopic}
-          >
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
-          <h2 className='topic'>{this.props.topic.name}</h2>
-          <button className='empty'>.</button>
-        </div>
-        <Sentence
-          onAnswerChange={this.handleAnswerChange}
-          sentence={this.state.currentSentence}
-          currentIndex={this.state.currentIndex}
-        />
-
-        <div className='options bottom'>
-          <button
-            className='left'
-            title='previous sentence'
-            onClick={this.previous}
-          >
-            <FontAwesomeIcon icon={faArrowLeft} />
-          </button>
-          <button
-            className='restart'
-            title='restart sentence set'
-            onClick={this.restart}
-          >
-            <FontAwesomeIcon icon={faBackward} />
-          </button>
-          <button
-            className='check'
-            title='check answer'
-            onClick={this.checkAnswer}
-          >
-            <FontAwesomeIcon icon={faSquareCheck} />
-          </button>
-          <button className='help' title='reveal answer' onClick={this.reveal}>
-            <FontAwesomeIcon icon={faQuestionCircle} />
-          </button>
-          <button className='right' title='next sentence' onClick={this.next}>
-            <FontAwesomeIcon icon={faArrowRight} />
-          </button>
-        </div>
+  return (
+    <div className='SentencesContainer'>
+      <div className='options top'>
+        <button title='pick new topic' className='back' onClick={resetTopic}>
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </button>
+        <h2 className='topic'>{topic.name}</h2>
+        <button className='empty'>.</button>
       </div>
-    );
-  }
-}
+      <Sentence
+        onAnswerChange={handleAnswerChange}
+        sentence={currentSentence}
+        currentIndex={currentIndex}
+      />
 
-export default SentencesContainer;
+      <div className='options bottom'>
+        <button className='left' title='previous sentence' onClick={previous}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <button
+          className='restart'
+          title='restart sentence set'
+          onClick={restart}
+        >
+          <FontAwesomeIcon icon={faBackward} />
+        </button>
+        <button className='check' title='check answer' onClick={checkAnswer}>
+          <FontAwesomeIcon icon={faSquareCheck} />
+        </button>
+        <button className='help' title='reveal answer' onClick={reveal}>
+          <FontAwesomeIcon icon={faQuestionCircle} />
+        </button>
+        <button className='right' title='next sentence' onClick={next}>
+          <FontAwesomeIcon icon={faArrowRight} />
+        </button>
+      </div>
+    </div>
+  );
+}

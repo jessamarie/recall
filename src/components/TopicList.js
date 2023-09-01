@@ -1,28 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './TopicList.scss';
 
 /**
  * TopicList is the component that displays a list of topics
  */
-class TopicList extends Component {
-  /* constructor */
-  constructor() {
-    super();
-
-    this.onClick = this.onClick.bind(this);
-  }
+export default function TopicList({
+  topics,
+  selectedIndex,
+  onTopicSelect,
+  onTopicSubmit,
+  onInputChange,
+  onListTraversal
+}) {
   /*
     ListItems fills the dropdown with topics that match the
     input data
   */
-  ListItems() {
-    if (this.props.topics && this.props.topics.length > 0) {
-      return this.props.topics.map((topic, index) => {
+  function getListItems() {
+    if (topics && topics.length > 0) {
+      return topics.map((topic, index) => {
         return (
           <li
             key={index}
-            className={this.props.selectedIndex === index ? 'selected' : ''}
-            onClick={(e) => this.onClick(e, topic.id, index)}
+            className={selectedIndex === index ? 'selected' : ''}
+            onClick={(e) => onClick(e, topic.id, index)}
           >
             {topic.name}
           </li>
@@ -33,31 +34,27 @@ class TopicList extends Component {
     return null;
   }
 
-  onClick(e, id, index) {
+  function onClick(e, id, index) {
     e.preventDefault();
-    this.props.onTopicSelect(e, id, index);
-    this.props.onTopicSubmit(e);
+    onTopicSelect(e, id, index);
+    onTopicSubmit(e);
   }
 
-  render() {
-    var listItems = this.ListItems();
-    var list = listItems ? <ul> {listItems} </ul> : null;
+  const listItems = getListItems();
+  const list = listItems ? <ul> {listItems} </ul> : null;
 
-    return (
-      <form className='TopicList' onSubmit={this.props.onTopicSubmit}>
-        <div className='input-wrapper'>
-          <input
-            list='topics'
-            onChange={this.props.onInputChange}
-            onKeyDown={this.props.onListTraversal}
-            placeholder='Enter a topic (e.g. Web)'
-          />
-          {/* <span className="autocomplete"></span> */}
-        </div>
-        <div className='list-wrapper'>{list}</div>
-      </form>
-    );
-  }
+  return (
+    <form className='TopicList' onSubmit={onTopicSubmit}>
+      <div className='input-wrapper'>
+        <input
+          list='topics'
+          onChange={onInputChange}
+          onKeyDown={onListTraversal}
+          placeholder='Enter a topic (e.g. Web)'
+        />
+        {/* <span className="autocomplete"></span> */}
+      </div>
+      <div className='list-wrapper'>{list}</div>
+    </form>
+  );
 }
-
-export default TopicList;
