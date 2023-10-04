@@ -1,10 +1,11 @@
 # Recall
 
+## Link to API Repository
+[Recall-api](https://github.com/jessamarie/recall-api)
+
 ## Screenshot
 
-The following image is a temporary placeholder.
-
-![Image of Yaktocat][3]
+![image](https://github.com/jessamarie/recall/assets/18352685/665c1a9c-950b-4bbc-b4fb-a5622bc5180a)
 
 ## Installation instructions for dependencies
 
